@@ -3,7 +3,6 @@ table.dataTable {
     margin: 0 auto;
     clear: both;
     border-collapse: separate;
-    border-spacing: 0
 }
 
 table.dataTable thead th,
@@ -34,7 +33,7 @@ table.dataTable thead .sorting_desc,
 table.dataTable thead .sorting_asc_disabled,
 table.dataTable thead .sorting_desc_disabled {
     cursor: pointer;
-    *cursor: hand;
+    /* cursor: hand; */
     background-repeat: no-repeat;
     background-position: center right
 }
@@ -349,7 +348,7 @@ table.dataTable td {
 .dataTables_wrapper {
     position: relative;
     clear: both;
-    *zoom: 1;
+    /* *zoom: 1; */
     zoom: 1
 }
 
@@ -410,7 +409,7 @@ table.dataTable td {
     color: #ffffff !important;
     border: 1px solid #ffffff;
     background-color: white;
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(100%, #dcdcdc));
+    /* background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(100%, #dcdcdc)); */
     background: #356fbd;
     color: #ffffff;
     border-radius: 10px;

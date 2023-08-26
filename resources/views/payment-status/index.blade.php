@@ -97,7 +97,7 @@
                                             <tr>
                                                 <th scope="row">{{ $i }}</th>
                                                 <td><strong>{{ $val->name }}</strong></td>
-                                                <td><div class="form-check form-check-primary form-switch">
+                                                <td><div class="form-check form-check-success form-switch">
                                                         <input class="form-check-input checked_chackbox" id="systemNotification" type="checkbox" name="is_default" onclick="ChangeStatusActive({{ $val->id }})" @if ($val->status == 1)
                                                             @checked(true) 
                                                         @endif   @if ($val->is_default == 1)
@@ -107,7 +107,7 @@
                                                 </td>
 
                                                 <td>
-                                                    <div class="form-check form-check-primary form-switch">
+                                                    <div class="form-check form-check-dark form-switch">
                                                         <input class="form-check-input checked_chackbox" id="systemNotification" type="checkbox" name="is_default"  value="1" onclick="ChangeISDefaultTo({{ $val->id }}, '{{ $val->name}}')" @if ($val->is_default == 1)
                                                         @checked(true) 
                                                     @endif >

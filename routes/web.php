@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrderStatusController;
 use App\Http\Controllers\PaymentModeController;
 use App\Http\Controllers\PaymentStatusController;
 use Illuminate\Support\Facades\Route;
@@ -32,5 +33,9 @@ Route::group(['as' => 'master.'], function () {
     Route::resource('payment-mode', PaymentModeController::class);
     Route::post('payment-mode.change_status',[PaymentModeController::class,'changeStatus'])->name('payment-mode.change_status');
     Route::get('payment_mode.change_default_to/{id}',[PaymentModeController::class,'changeDefaultto'])->name('payment_mode.change_default_to');
+
+    Route::resource('order-status', OrderStatusController::class);
+    Route::post('order-status.change_status',[OrderStatusController::class,'changeStatus'])->name('order-status.change_status');
+    Route::get('order-status.change_default_to/{id}',[OrderStatusController::class,'changeDefaultto'])->name('order-status.change_default_to');
     
 });

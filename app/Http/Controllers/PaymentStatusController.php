@@ -43,7 +43,7 @@ class PaymentStatusController extends Controller
             PaymentStatus::where('is_default','1')->update(['is_default' => '0']);
         }
         PaymentStatus::create($data);
-        return redirect()->route('payment-status.index')->with('success','Status added successfully');
+        return redirect()->route('master.payment-status.index')->with('success','Status added successfully');
     }
 
     /**

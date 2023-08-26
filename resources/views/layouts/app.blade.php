@@ -48,7 +48,7 @@
             border-bottom: 1px solid rgb(105 94 94 / 20%) !important;
         }
         table.dataTable tbody tr.even {
-            background-color: #f3f2f7;
+            /* background-color: #f3f2f7; */
         }
 
         .table > :not(caption) > * > * {

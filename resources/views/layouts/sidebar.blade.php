@@ -18,7 +18,7 @@
                 
             </li>
 
-            <li class=" nav-item {{ Request::routeIs('master.payment-status.index', 'master.payment-status.edit','master.payment-status.create','master.payment-mode.index', 'master.payment-mode.edit','master.payment-mode.create') ? 'has-sub open' : '' }} "><a class="d-flex align-items-center" href=""><i data-feather="shopping-bag"></i><span class="menu-title text-truncate" data-i18n="Invoice">Master</span></a>
+            <li class=" nav-item {{ Request::routeIs('master.payment-status.index', 'master.payment-status.edit','master.payment-status.create','master.payment-mode.index', 'master.payment-mode.edit','master.payment-mode.create','master.order-status.index', 'master.order-status.edit','master.order-status.create') ? 'has-sub open' : '' }} "><a class="d-flex align-items-center" href=""><i data-feather="shopping-bag"></i><span class="menu-title text-truncate" data-i18n="Invoice">Master</span></a>
                 <ul class="menu-content">
                     <li><a class="d-flex align-items-center {{ Request::routeIs('master.payment-status.index', 'master.payment-status.edit','master.payment-status.create') ? 'active' : '' }} " href="{{ route('master.payment-status.index') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop"> Payment Status</span></a>
                     </li>
@@ -26,7 +26,7 @@
                     <li><a class="d-flex align-items-center {{ Request::routeIs('master.payment-mode.index', 'master.payment-mode.edit','master.payment-mode.create') ? 'active' : '' }} " href="{{ route('master.payment-mode.index') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">Payment Mode</span></a>
                     </li>
 
-                    <li><a class="d-flex align-items-center" href="#"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">Order Status</span></a>
+                    <li><a class="d-flex align-items-center {{ Request::routeIs('master.order-status.index', 'master.order-status.edit','master.order-status.create') ? 'active' : '' }}" href="{{ Route('master.order-status.index') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">Order Status</span></a>
                     </li>
                 </ul>
         </li>

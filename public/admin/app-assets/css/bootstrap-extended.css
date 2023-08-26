@@ -127,7 +127,9 @@ pre code {
 
 .table:not(.table-dark):not(.table-light) thead:not(.table-dark) th,
 .table:not(.table-dark):not(.table-light) tfoot:not(.table-dark) th {
-  background-color: #f3f2f7; }
+  background-color: #356fbd;
+  color: #fcfdfe;
+}
 
 .table-hover tbody tr {
   cursor: pointer; }
@@ -1020,7 +1022,8 @@ select:-webkit-autofill {
 
 @media (max-width: 767.98px) {
   .header-navbar.floating-nav {
-    width: calc( 100vw - (100vw - 100%) - calc(2rem + 0.4rem)) !important;
+    width: calc(
+ 100vw - (100vw - 100%) - calc(2rem + 0.4rem)) !important;
     margin-left: calc(2rem - 0.8rem);
     margin-right: calc(2rem - 0.8rem); }
   .header-navbar .navbar-container ul.navbar-nav li .selected-language {

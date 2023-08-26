@@ -3209,7 +3209,8 @@ body:after {
 
 table.dataTable {
   width: 100% !important;
-  border-collapse: collapse !important; }
+  /* border-collapse: collapse !important;  */
+}
 
 table.dataTable.table-responsive:not(.datatables-ajax) {
   display: block; }
