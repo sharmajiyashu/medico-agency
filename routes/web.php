@@ -3,6 +3,7 @@
 use App\Http\Controllers\OrderStatusController;
 use App\Http\Controllers\PaymentModeController;
 use App\Http\Controllers\PaymentStatusController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,3 +40,6 @@ Route::group(['as' => 'master.'], function () {
     Route::get('order-status.change_default_to/{id}',[OrderStatusController::class,'changeDefaultto'])->name('order-status.change_default_to');
     
 });
+
+Route::resource('products', ProductController::class);
+Route::post('products.change_status',[ProductController::class,'changeStatus'])->name('products.change_status');

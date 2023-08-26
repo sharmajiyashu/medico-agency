@@ -29,7 +29,11 @@
                     <li><a class="d-flex align-items-center {{ Request::routeIs('master.order-status.index', 'master.order-status.edit','master.order-status.create') ? 'active' : '' }}" href="{{ Route('master.order-status.index') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">Order Status</span></a>
                     </li>
                 </ul>
-        </li>
+            </li>
+
+            <li class=" nav-item {{ Request::routeIs('products.index', 'products.edit','products.create') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('products.index') }}"><i data-feather="home"></i><span class="menu-title text-truncate" >Products</span><span class="badge badge-light-white rounded-pill ms-auto me-1">10</span></a>
+                
+            </li>
         
         </ul>
     </div>
