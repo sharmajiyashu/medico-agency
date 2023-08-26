@@ -28,7 +28,7 @@
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="{{ url('admin')}}">Home</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="{{ route('payment-status.index') }}">Payment status</a>
+                                    <li class="breadcrumb-item"><a href="{{ route('master.payment-status.index') }}">Payment status</a>
                                     </li>
                                     <li class="breadcrumb-item active">Add
                                     </li>
@@ -60,7 +60,7 @@
                                     <h4 class="card-title">Create</h4>
                                 </div>
                                 <div class="card-body">
-                                    <form class="form" action="{{ route('payment-status.store') }}" method="POST" enctype="multipart/form-data">
+                                    <form class="form" action="{{ route('master.payment-status.store') }}" method="POST" enctype="multipart/form-data">
                                     {{ csrf_field() }}
                                     
                                         <div class="row">

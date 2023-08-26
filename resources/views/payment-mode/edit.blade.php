@@ -14,12 +14,12 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-start mb-0">Payment Status</h2>
+                            <h2 class="content-header-title float-start mb-0">Payment Mode</h2>
                             <div class="breadcrumb-wrapper">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="{{ url('/')}}">Home</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="{{ route('master.payment-status.index') }}">Payment-status </a>
+                                    <li class="breadcrumb-item"><a href="{{ route('master.payment-mode.index') }}">Payment-mode </a>
                                     </li>
                                     <li class="breadcrumb-item active">Edit
                                     </li>
@@ -53,7 +53,7 @@
                                 <div class="card-body">
                                     
 
-                                    <form class="form" action="{{ route('master.payment-status.update',$paymentStatus->id) }}" method="POST" enctype="multipart/form-data">
+                                    <form class="form" action="{{ route('master.payment-mode.update',$paymentMode->id) }}" method="POST" enctype="multipart/form-data">
                                         {{ csrf_field() }}
                                         @method('PATCH')
                                     
@@ -61,7 +61,7 @@
                                             <div class="col-md-8 col-12">
                                                 <div class="mb-1">
                                                     <label class="form-label" for="first-name-column">Name <span class="error">*</span></label>
-                                                    <input type="text" id="first-name-column" name="name" class="form-control" placeholder="Name" oninput=""  value="{{ $paymentStatus->name }}" />
+                                                    <input type="text" id="first-name-column" name="name" class="form-control" placeholder="Name" oninput=""  value="{{ $paymentMode->name }}" />
                                                 </div>
                                             </div>
 
@@ -70,11 +70,11 @@
                                                     <label class="form-label" for="first-name-column">Status <span class="error">*</span></label>
                                                     <div class="form-check form-check-primary form-switch">
                                                         <input class="form-check-input checked_chackbox" id="systemNotification" type="checkbox" name="status"  value="1"  
-                                                            @if ($paymentStatus->is_default == 1)
+                                                            @if ($paymentMode->is_default == 1)
                                                                 @disabled(true)
                                                             @endif
 
-                                                            @if ($paymentStatus->status == 1)
+                                                            @if ($paymentMode->status == 1)
                                                                 @checked(true)
                                                             @endif
                                                         >

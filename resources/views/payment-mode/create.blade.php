@@ -5,6 +5,15 @@
 
 @section('content')
 
+<style>
+    .error{
+        color:red;
+    }
+    /* input {
+        text-transform: uppercase;
+    } */
+</style>
+
  <!-- BEGIN: Content-->
  <div class="app-content content ">
         <div class="content-overlay"></div>
@@ -14,14 +23,14 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-start mb-0">Payment Status</h2>
+                            <h2 class="content-header-title float-start mb-0">Payment Mode</h2>
                             <div class="breadcrumb-wrapper">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="{{ url('/')}}">Home</a>
+                                    <li class="breadcrumb-item"><a href="{{ url('admin')}}">Home</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="{{ route('master.payment-status.index') }}">Payment-status </a>
+                                    <li class="breadcrumb-item"><a href="{{ route('master.payment-mode.index') }}">Payment Mode</a>
                                     </li>
-                                    <li class="breadcrumb-item active">Edit
+                                    <li class="breadcrumb-item active">Add
                                     </li>
                                 </ol>
                             </div>
@@ -48,20 +57,17 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Edit</h4>
+                                    <h4 class="card-title">Create</h4>
                                 </div>
                                 <div class="card-body">
-                                    
-
-                                    <form class="form" action="{{ route('master.payment-status.update',$paymentStatus->id) }}" method="POST" enctype="multipart/form-data">
-                                        {{ csrf_field() }}
-                                        @method('PATCH')
+                                    <form class="form" action="{{ route('master.payment-mode.store') }}" method="POST" enctype="multipart/form-data">
+                                    {{ csrf_field() }}
                                     
                                         <div class="row">
                                             <div class="col-md-8 col-12">
                                                 <div class="mb-1">
                                                     <label class="form-label" for="first-name-column">Name <span class="error">*</span></label>
-                                                    <input type="text" id="first-name-column" name="name" class="form-control" placeholder="Name" oninput=""  value="{{ $paymentStatus->name }}" />
+                                                    <input type="text" id="first-name-column" name="name" class="form-control" placeholder="Name" oninput=""  value="{{ old('name') }}" />
                                                 </div>
                                             </div>
 
@@ -69,18 +75,28 @@
                                                 <div class="mb-1">
                                                     <label class="form-label" for="first-name-column">Status <span class="error">*</span></label>
                                                     <div class="form-check form-check-primary form-switch">
-                                                        <input class="form-check-input checked_chackbox" id="systemNotification" type="checkbox" name="status"  value="1"  
-                                                            @if ($paymentStatus->is_default == 1)
-                                                                @disabled(true)
-                                                            @endif
-
-                                                            @if ($paymentStatus->status == 1)
-                                                                @checked(true)
-                                                            @endif
-                                                        >
+                                                        
+                                                        <input class="form-check-input checked_chackbox" id="systemNotification" type="checkbox" name="status"  value="1"  checked>
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="col-md-2 col-12">
+                                                <div class="mb-1">
+                                                    <label class="form-label" for="first-name-column">Set is to default <span class="error"></span></label>
+                                                    <div class="form-check form-check-primary form-switch">
+                                                        <input class="form-check-input checked_chackbox" id="systemNotification" type="checkbox" name="is_default"  value="1" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            {{-- <div class="col-md-6 col-12">
+                                                <div class="mb-1">
+                                                    <label class="form-label" for="first-name-column">Packing Quantity</label>
+                                                    <input type="text" id="first-name-column" name="packing_quantity" class="form-control" placeholder="Packing Quantity" value="{{ old('packing_quantity') }}" />
+                                                </div>
+                                            </div> --}}
+                                            
                                             
                                             <div class="col-12">
                                                 <button type="submit" class="btn btn-primary me-1">Submit</button>

@@ -38,13 +38,9 @@ class PaymentStatusController extends Controller
     public function store(StorePaymentStatusRequest $request)
     {
         $data = $request->validated();
-        // if($request->status == 1){
-        //     $data['status'] = 1;
-        // }
-
         if($request->is_default){
-            $data['is_default'] = 1;   
-            PaymentStatus::where('is_default',1)->update(['is_default' => 0]);
+            $data['is_default'] = '1';   
+            PaymentStatus::where('is_default','1')->update(['is_default' => '0']);
         }
         PaymentStatus::create($data);
         return redirect()->route('payment-status.index')->with('success','Status added successfully');
@@ -69,7 +65,7 @@ class PaymentStatusController extends Controller
      */
     public function edit(PaymentStatus $paymentStatus)
     {
-        //
+        return view('payment-status.edit',compact('paymentStatus'));
     }
 
     /**
@@ -81,7 +77,14 @@ class PaymentStatusController extends Controller
      */
     public function update(Request $request, PaymentStatus $paymentStatus)
     {
-        //
+        $check = PaymentStatus::where('id','!=',$paymentStatus->id)->where('name',$request->name)->count();
+        if($check > 0){
+            return back()->withErrors([
+                'email' => 'The name has already been taken.',
+            ])->onlyInput('email');
+        }
+        $paymentStatus->update($request->all());
+        return redirect()->route('master.payment-status.index')->with('success','Payment status update successfully');
     }
 
     /**

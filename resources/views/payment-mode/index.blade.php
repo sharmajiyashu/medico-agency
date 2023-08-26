@@ -24,12 +24,12 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-start mb-0">Payment Status</h2>
+                            <h2 class="content-header-title float-start mb-0">Payment Mode</h2>
                             <div class="breadcrumb-wrapper">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="{{url('/')}}">Home</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="{{ route('master.payment-status.index') }}">Payment Status</a>
+                                    <li class="breadcrumb-item"><a href="{{ route('master.payment-mode.index') }}">Payment Mode</a>
                                     </li>
                                     <li class="breadcrumb-item active">List
                                     </li>
@@ -47,7 +47,7 @@
                             <div class="card">
                                 <div class="card-header border-bottom">
                                     <h4 class="card-title">List</h4>
-                                    <a href="{{route('master.payment-status.create')}}" class=" btn btn-primary btn-gradient round  ">Add Status</a>
+                                    <a href="{{route('master.payment-mode.create')}}" class=" btn btn-primary btn-gradient round  ">Add Mode</a>
                                 </div>
                                 <div class="card-datatable">
                                     <table class="datatables-ajax table table-responsive datatable_data">
@@ -55,7 +55,7 @@
                                         <script>
                                             function ChangeStatusActive (id){
                                                 $.ajax({
-                                                    url: "{{ route('master.payment-status.change_status') }}",
+                                                    url: "{{ route('master.payment-mode.change_status') }}",
                                                     type: 'POST',
                                                     dataType: 'json',
                                                     data: {
@@ -75,7 +75,7 @@
                                             function ChangeISDefaultTo(id,name){
                                                 var result = confirm("Are you sure you want to set default to "+name+" ?");
                                                 if (result) {
-                                                    window.location.href = "{{ route('master.payment_status.change_default_to', ':id') }}".replace(':id', id);
+                                                    window.location.href = "{{ route('master.payment_mode.change_default_to', ':id') }}".replace(':id', id);
                                                 } else {
                                                     
                                                 }
@@ -93,7 +93,7 @@
                                         </thead>
                                         <tbody>
                                             @php  $i=1; @endphp
-                                            @foreach($payment_status as $key => $val)
+                                            @foreach($payment_mode as $key => $val)
                                             <tr>
                                                 <th scope="row">{{ $i }}</th>
                                                 <td><strong>{{ $val->name }}</strong></td>
@@ -116,7 +116,7 @@
                                                 </td>
                                                 <td>{{ date('d-M-y H:i:s',strtotime($val->created_at)) }}</td>
                                                 <td>
-                                                    <a  href="{{route('master.payment-status.edit',$val->id)}}">
+                                                    <a  href="{{route('master.payment-mode.edit',$val->id)}}">
                                                         <button class="btn btn-info">Edit</button>
                                                     </a>
 
@@ -141,7 +141,7 @@
                                                                             
                                                                     </div>
                                                                     @if ($val->is_default != 1)
-                                                                    <form action="{{route('master.payment-status.destroy',$val->id)}}" method="POST">
+                                                                    <form action="{{route('master.payment-mode.destroy',$val->id)}}" method="POST">
                                                                         @endif 
                                                                         @csrf
                                                                         @method('delete')
