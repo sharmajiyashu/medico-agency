@@ -4,6 +4,8 @@ use App\Http\Controllers\OrderStatusController;
 use App\Http\Controllers\PaymentModeController;
 use App\Http\Controllers\PaymentStatusController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,4 +44,6 @@ Route::group(['as' => 'master.'], function () {
 });
 
 Route::resource('products', ProductController::class);
+Route::resource('users', UserController::class);
 Route::post('products.change_status',[ProductController::class,'changeStatus'])->name('products.change_status');
+Route::post('users.change_status',[ProductController::class,'changeStatus'])->name('users.change_status');
