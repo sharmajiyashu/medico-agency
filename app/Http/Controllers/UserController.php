@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
+use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -14,7 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::where('id','desc')->get();
+        $users = User::role(User::$role_user)->orderBy('id','desc')->get();
         return view('users.index',compact('users'));
     }
 
@@ -25,7 +28,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.create');
     }
 
     /**
@@ -34,9 +37,19 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        //
+        $data  = $request->validated();
+        if($request->hasFile('image')) {
+            $image_name = time().rand(1,100).'-'.$request->image->getClientOriginalName();
+            $image_name = preg_replace('/\s+/', '', $image_name);
+            $request->image->move(public_path('images/users'), $image_name);
+            $data['image'] = $image_name;
+        }
+        $data['role'] = 2;
+        $data['password'] = Hash::make($request->password);
+        User::create($data);
+        return redirect()->route('users.index')->with('success','User create successfully');
     }
 
     /**
@@ -81,6 +94,21 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+        $user->update(['email' => '']);
+        return redirect()->back()->with('success','User delete successfully');
     }
+
+    public function changeStatus(Request $request){
+        $payment_status = User::where('id',$request->id)->first();
+        if($payment_status->status == User::$active){
+            $payment_status->update(['status' => User::$inactive]);
+            return json_encode(['0' ,'Status Inactive Successfully']);
+        }else{
+            $payment_status->update(['status' => User::$active]);
+            return json_encode(['1' ,'Status Active Successfully']);
+        }
+    }
+
+    
 }

@@ -76,6 +76,9 @@
                                             <tr>
                                                 <th>Sr.no</th>
                                                 <th>Name</th>
+                                                <th>Mobile</th>
+                                                <th>Email</th>
+                                                <th>City</th>
                                                 <th>status</th>
                                                 <th>Created Date</th>
                                                 <th>Action</th>
@@ -86,7 +89,10 @@
                                             @foreach($users as $key => $val)
                                             <tr>
                                                 <th scope="row">{{ $i }}</th>
-                                                <td><strong>{{ $val->name }}</strong></td>
+                                                <td><strong>{{ $val->first_name }} {{ $val->last_name }}</strong></td>
+                                                <td>{{ $val->mobile }}</td>
+                                                <td>{{ $val->email }}</td>
+                                                <td>{{ $val->city }}</td>
                                                 <td><div class="form-check form-check-success form-switch">
                                                         <input class="form-check-input checked_chackbox" id="systemNotification" type="checkbox" name="is_default" onclick="ChangeStatusActive({{ $val->id }})" @if ($val->status == 1)
                                                             @checked(true) 
@@ -122,7 +128,7 @@
                                                                             
                                                                     </div>
                                                                     @if ($val->is_default != 1)
-                                                                    <form action="{{route('products.destroy',$val->id)}}" method="POST">
+                                                                    <form action="{{route('users.destroy',$val->id)}}" method="POST">
                                                                         @endif 
                                                                         @csrf
                                                                         @method('delete')

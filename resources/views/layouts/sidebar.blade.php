@@ -31,11 +31,15 @@
                 </ul>
             </li>
 
-            <li class=" nav-item {{ Request::routeIs('products.index', 'products.edit','products.create') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('products.index') }}"><i data-feather="home"></i><span class="menu-title text-truncate" >Products</span><span class="badge badge-light-white rounded-pill ms-auto me-1">10</span></a>
+            @php
+                $product_count = DB::table('products')->count();
+                $user_count = DB::table('users')->where('role','2')->count();
+            @endphp
+            <li class=" nav-item {{ Request::routeIs('products.index', 'products.edit','products.create') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('products.index') }}"><i data-feather="shopping-cart"></i><span class="menu-title text-truncate" >Products</span><span class="badge badge-light-white rounded-pill ms-auto me-1">{{ $product_count }}</span></a>
                 
             </li>
 
-            <li class=" nav-item {{ Request::routeIs('users.index', 'users.edit','users.create') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('users.index') }}"><i data-feather="home"></i><span class="menu-title text-truncate" >Users</span><span class="badge badge-light-white rounded-pill ms-auto me-1">10</span></a>
+            <li class=" nav-item {{ Request::routeIs('users.index', 'users.edit','users.create') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('users.index') }}"><i data-feather="user"></i><span class="menu-title text-truncate" >Users</span><span class="badge badge-light-white rounded-pill ms-auto me-1">{{ $user_count }}</span></a>
                 
             </li>
         

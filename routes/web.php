@@ -46,4 +46,4 @@ Route::group(['as' => 'master.'], function () {
 Route::resource('products', ProductController::class);
 Route::resource('users', UserController::class);
 Route::post('products.change_status',[ProductController::class,'changeStatus'])->name('products.change_status');
-Route::post('users.change_status',[ProductController::class,'changeStatus'])->name('users.change_status');
+Route::post('users.change_status',[UserController::class,'changeStatus'])->name('users.change_status');

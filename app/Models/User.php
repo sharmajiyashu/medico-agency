@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable,SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -18,13 +19,22 @@ class User extends Authenticatable
      * @var array<int, string>
      */
 
+    public function scopeRole($query, $role)
+    {
+        return $query->where('role', $role);
+    }
+
     static $role_admin = 1;
     static $role_user = 2;
+
+    static $active = '1';
+    static $inactive = '0';
     
     protected $fillable = [
         'name',
         'email',
         'password',
+        'address','city','image','mobile','last_name','first_name','business_name','role','status'
     ];
 
     /**

@@ -410,7 +410,7 @@ table.dataTable td {
     border: 1px solid #ffffff;
     background-color: white;
     /* background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(100%, #dcdcdc)); */
-    background: #356fbd;
+    background: #143a6eb8;
     color: #ffffff;
     border-radius: 10px;
 }
