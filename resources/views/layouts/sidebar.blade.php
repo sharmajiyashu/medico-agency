@@ -32,14 +32,19 @@
             </li>
 
             @php
-                $product_count = DB::table('products')->count();
-                $user_count = DB::table('users')->where('role','2')->count();
+                $product_count = DB::table('products')->whereNull('deleted_at')->count();
+                $user_count = DB::table('users')->where('role','2')->whereNull('deleted_at')->count();
+                $orders_count = DB::table('orders')->whereNull('deleted_at')->count();
             @endphp
             <li class=" nav-item {{ Request::routeIs('products.index', 'products.edit','products.create') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('products.index') }}"><i data-feather="shopping-cart"></i><span class="menu-title text-truncate" >Products</span><span class="badge badge-light-white rounded-pill ms-auto me-1">{{ $product_count }}</span></a>
                 
             </li>
 
             <li class=" nav-item {{ Request::routeIs('users.index', 'users.edit','users.create') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('users.index') }}"><i data-feather="user"></i><span class="menu-title text-truncate" >Users</span><span class="badge badge-light-white rounded-pill ms-auto me-1">{{ $user_count }}</span></a>
+                
+            </li>
+
+            <li class=" nav-item {{ Request::routeIs('orders.index', 'orders.edit','orders.create') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('orders.index') }}"><i data-feather="shopping-cart"></i><span class="menu-title text-truncate" >Orders</span><span class="badge badge-light-white rounded-pill ms-auto me-1">{{ $orders_count }}</span></a>
                 
             </li>
         
