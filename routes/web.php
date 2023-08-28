@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderStatusController;
 use App\Http\Controllers\PaymentModeController;
@@ -20,13 +21,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::group(['middleware' => 'auth'], function () {
 
-Route::get('logout', function () {
-    return view('dashboard');
-})->name('admin.logout');
+
+Route::get('/', [LoginController::class,'dashboard'])->name('dashboard');
+
+Route::get('logout',[LoginController::class,'logout'])->name('admin.logout');
 
 
 Route::group(['as' => 'master.'], function () {
@@ -49,3 +49,8 @@ Route::resource('orders', OrderController::class);
 Route::resource('users', UserController::class);
 Route::post('products.change_status',[ProductController::class,'changeStatus'])->name('products.change_status');
 Route::post('users.change_status',[UserController::class,'changeStatus'])->name('users.change_status');
+
+});
+
+Route::get('login',[LoginController::class,'index'])->name('login');
+Route::post('check_login',[LoginController::class,'check_login'])->name('check_login');
