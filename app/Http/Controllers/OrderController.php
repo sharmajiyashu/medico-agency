@@ -118,17 +118,17 @@ class OrderController extends Controller
 
     public function change_payment_status($order_id ,$id){
        Order::where('id',$order_id)->update(['payment_status' => $id]);
-       return redirect()->back()->with('Payment status update successfully');
+       return redirect()->back()->with('success','Payment status update successfully');
     }
 
     public function change_payment_mode($order_id ,$id){
         Order::where('id',$order_id)->update(['payment_mode' => $id]);
-        return redirect()->back()->with('Payment mode update successfully');
+        return redirect()->back()->with('success','Payment mode update successfully');
      }
 
     public function change_order_status($order_id ,$id){
         Order::where('id',$order_id)->update(['order_status' => $id]);
-        return redirect()->back()->with('Order status update successfully');
+        return redirect()->back()->with('success','Order status update successfully');
     }
 
 }
