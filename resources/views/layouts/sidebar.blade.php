@@ -40,7 +40,7 @@
                 
             </li>
 
-            <li class=" nav-item {{ Request::routeIs('users.index', 'users.edit','users.create') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('users.index') }}"><i data-feather="user"></i><span class="menu-title text-truncate" >Users</span><span class="badge badge-light-white rounded-pill ms-auto me-1">{{ $user_count }}</span></a>
+            <li class=" nav-item {{ Request::routeIs('users.index', 'users.edit','users.create') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('users.index') }}"><i data-feather="user"></i><span class="menu-title text-truncate" >Customer</span><span class="badge badge-light-white rounded-pill ms-auto me-1">{{ $user_count }}</span></a>
                 
             </li>
 

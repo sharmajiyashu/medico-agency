@@ -24,12 +24,12 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-start mb-0">User</h2>
+                            <h2 class="content-header-title float-start mb-0">Customer</h2>
                             <div class="breadcrumb-wrapper">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="{{url('/')}}">Home</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="{{ route('users.index') }}">Users</a>
+                                    <li class="breadcrumb-item"><a href="{{ route('users.index') }}">Customers</a>
                                     </li>
                                     <li class="breadcrumb-item active">List
                                     </li>
@@ -47,7 +47,7 @@
                             <div class="card">
                                 <div class="card-header border-bottom">
                                     <h4 class="card-title">List</h4>
-                                    <a href="{{route('users.create')}}" class=" btn btn-primary btn-gradient round  ">Add User</a>
+                                    <a href="{{route('users.create')}}" class=" btn btn-primary btn-gradient round  ">Add Customer</a>
                                 </div>
                                 <div class="card-datatable">
                                     <table class="datatables-ajax table table-responsive datatable_data">
