@@ -141,6 +141,33 @@
                                                 </div>
                                                 </div>
                                             </div>
+                                            <form action="{{ route('update_order_invoice') }}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                <input type="hidden"  name="order_id" value="{{ $order->id }}">
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="mb-1">
+                                                            <label for="">Update Invoice</label>
+                                                            <input type="file" class="form-control" name="image">
+                                                        </div>
+                                                    </div>
+    
+                                                    <div class="col-md-6" style="align-self: center;">
+                                                        <a href="{{ asset('public/invoice/'.$order->invoice) }}" class="btn btn-dark" target="_blank"><i data-feather="eye"></i> View</a>
+                                                    </div>
+    
+                                                    <div class="col-md-6">
+                                                        <div class="mb-1">
+                                                            <button class="btn btn-info" type="submit">Update Invoice</button>
+                                                        </div>
+                                                    </div>
+
+                                                    
+                                                </div>
+                                                
+                                            </form>
+
 
                                         </div>          
                                     </div>

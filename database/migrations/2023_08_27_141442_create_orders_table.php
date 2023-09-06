@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('order_status')->nullable();
             $table->string('address')->nullable();
             $table->longText('reject_res')->nullable();
+            $table->longText('remark')->nullable();
+            $table->longText('invoice')->nullable();
             $table->date('delivered_date')->nullable();
             $table->timestamps();
         });

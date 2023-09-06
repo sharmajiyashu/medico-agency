@@ -59,6 +59,7 @@ class UserController extends Controller
         $order->payment_mode = isset(PaymentMode::find($order->payment_mode)->name) ? PaymentMode::find($order->payment_mode)->name :'';
         $order->order_status = isset(OrderStatus::find($order->order_status)->name) ? OrderStatus::find($order->order_status)->name :'';
         $items = 0;
+        $remark  = "";
         foreach($products as $key=>$val){
             $check = Product::where('id',$val['product_id'])->where('status',Product::$active)->count();
             if($check > 0 && $val['quantity'] > 0){
@@ -68,6 +69,13 @@ class UserController extends Controller
                     'quantity' => $val['quantity'],
                 ]);
             }
+            if(!empty($val['remark'])){
+                $remark = $val['remark'];
+            }
+        }
+        $order->update(['remark' => $remark]);
+        if(!empty($order->invoice)){
+            $order->invoice = asset('public/invoice/'.$order->invoice);
         }
         $items = OrderItem::where('order_id',$order->id)->get()->map(function($items){
             $items->product_name = isset(Product::find($items->product_id)->name) ? Product::find($items->product_id)->name :'';
@@ -90,6 +98,9 @@ class UserController extends Controller
             $order->payment_status = isset(PaymentStatus::find($order->payment_status)->name) ? PaymentStatus::find($order->payment_status)->name :'';
             $order->payment_mode = isset(PaymentMode::find($order->payment_mode)->name) ? PaymentMode::find($order->payment_mode)->name :'';
             $order->order_status = isset(OrderStatus::find($order->order_status)->name) ? OrderStatus::find($order->order_status)->name :'';
+            if(!empty($order->invoice)){
+                $order->invoice = asset('public/invoice/'.$order->invoice);
+            }
             $items = OrderItem::select('product_id','quantity')->where('order_id',$order->id)->get()->map(function($items){
                 $items->product_name = isset(Product::find($items->product_id)->name) ? Product::find($items->product_id)->name :'';
                 return $items;
@@ -105,6 +116,9 @@ class UserController extends Controller
         $order->payment_status = isset(PaymentStatus::find($order->payment_status)->name) ? PaymentStatus::find($order->payment_status)->name :'';
         $order->payment_mode = isset(PaymentMode::find($order->payment_mode)->name) ? PaymentMode::find($order->payment_mode)->name :'';
         $order->order_status = isset(OrderStatus::find($order->order_status)->name) ? OrderStatus::find($order->order_status)->name :'';
+        if(!empty($order->invoice)){
+            $order->invoice = asset('public/invoice/'.$order->invoice);
+        }
         $items = OrderItem::where('order_id',$order->id)->get()->map(function($items){
             $items->product_name = isset(Product::find($items->product_id)->name) ? Product::find($items->product_id)->name :'';
             return $items;

@@ -52,6 +52,7 @@ Route::post('users.change_status',[UserController::class,'changeStatus'])->name(
 Route::get('change_payment_status/{order_id}/{id}',[OrderController::class,'change_payment_status'])->name('change_payment_status');
 Route::get('change_payment_mode/{order_id}/{id}',[OrderController::class,'change_payment_mode'])->name('change_payment_mode');
 Route::get('change_order_status/{order_id}/{id}',[OrderController::class,'change_order_status'])->name('change_order_status');
+Route::post('update_order_invoice',[OrderController::class,'updateInvoice'])->name('update_order_invoice');
 
 });
 

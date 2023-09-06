@@ -9,7 +9,9 @@ use App\Models\PaymentMode;
 use App\Models\PaymentStatus;
 use App\Models\Product;
 use App\Models\User;
+use Dotenv\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator as FacadesValidator;
 
 class OrderController extends Controller
 {
@@ -129,6 +131,27 @@ class OrderController extends Controller
     public function change_order_status($order_id ,$id){
         Order::where('id',$order_id)->update(['order_status' => $id]);
         return redirect()->back()->with('success','Order status update successfully');
+    }
+
+    public function updateInvoice(Request $request){
+        $validator = FacadesValidator::make($request->all(), [
+            'image' => 'required|mimes:jpeg,png,jpg,gif,pdf|max:2048', // Adjust mime types and size limit as needed
+            'order_id' => 'required|exists:orders,id'
+        ]);
+    
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $image = $request->file('image');
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('invoice'), $imageName);
+        $order = Order::where('id',$request->order_id)->update(['invoice' => $imageName]);
+        return redirect()->back()->with('success','Invoice update Successfully');
+
     }
 
 }
