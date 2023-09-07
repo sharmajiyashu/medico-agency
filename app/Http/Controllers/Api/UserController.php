@@ -101,6 +101,9 @@ class UserController extends Controller
             if(!empty($order->invoice)){
                 $order->invoice = asset('public/invoice/'.$order->invoice);
             }
+            if(!empty($order->summary)){
+                $order->summary = asset('public/images/users/'.$order->summary);
+            }
             $items = OrderItem::select('product_id','quantity')->where('order_id',$order->id)->get()->map(function($items){
                 $items->product_name = isset(Product::find($items->product_id)->name) ? Product::find($items->product_id)->name :'';
                 return $items;
@@ -118,6 +121,9 @@ class UserController extends Controller
         $order->order_status = isset(OrderStatus::find($order->order_status)->name) ? OrderStatus::find($order->order_status)->name :'';
         if(!empty($order->invoice)){
             $order->invoice = asset('public/invoice/'.$order->invoice);
+        }
+        if(!empty($order->summary)){
+            $order->summary = asset('public/images/users/'.$order->summary);
         }
         $items = OrderItem::where('order_id',$order->id)->get()->map(function($items){
             $items->product_name = isset(Product::find($items->product_id)->name) ? Product::find($items->product_id)->name :'';
@@ -139,6 +145,23 @@ class UserController extends Controller
         $user = User::find($request->user()->id);
         $user->image = asset('public/images/users/'.$request->user()->image);
         return $this->sendSuccess('Profile update successfully',$user);
+    }
+
+    public function generateSummary(Request $request){
+        if($request->hasFile('image') && $request->order_id) {
+            $order = Order::find($request->order_id);
+            if($order){
+                $image_name = time().rand(1,100).'-'.$request->image->getClientOriginalName();
+                $image_name = preg_replace('/\s+/', '', $image_name);
+                $request->image->move(public_path('images/users'), $image_name);
+                $order->update(['summary' => $image_name]);
+                return $this->sendSuccess('Summary upload successfully');
+            }else{
+                return $this->sendFailed('Order id is invalid',);
+            }
+        }else{
+            return $this->sendFailed('Image is invalid',);
+        }
     }
 
 }

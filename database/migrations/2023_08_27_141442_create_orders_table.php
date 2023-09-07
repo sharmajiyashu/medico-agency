@@ -24,6 +24,7 @@ return new class extends Migration
             $table->longText('reject_res')->nullable();
             $table->longText('remark')->nullable();
             $table->longText('invoice')->nullable();
+            $table->longText('summary')->nullable();
             $table->date('delivered_date')->nullable();
             $table->timestamps();
         });

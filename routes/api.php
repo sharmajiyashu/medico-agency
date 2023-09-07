@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('orders',[UserController::class,'orders']);
     Route::post('order_detail',[UserController::class,'orderDetail']);
     Route::post('update_profile',[UserController::class,'updateProfile']);
+    Route::post('generate_summary',[UserController::class,'generateSummary']);
 });
 
 Route::post('login',[UserController::class,'login']);
