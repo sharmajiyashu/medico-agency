@@ -103,7 +103,7 @@
                                                 </td>
                                                 <td>{{ date('d-M-y H:i:s',strtotime($val->created_at)) }}</td>
                                                 <td>
-                                                    <a  href="{{route('products.edit',$val->id)}}">
+                                                    <a  href="{{route('users.edit',$val->id)}}">
                                                         <button class="btn btn-info">Edit</button>
                                                     </a>
 
@@ -139,6 +139,10 @@
                                                                 </div>
                                                         </div>
                                                     </div>
+                                                    <br>
+                                                    <a  href="{{route('reset_password',$val->gen_id)}}" target="_blank">
+                                                        <button class="btn btn-dark" style="margin-top:2px">Reset Password</button>
+                                                    </a>
                                                 </td>
                                             </tr>
                                             @php $i++; @endphp

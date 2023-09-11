@@ -40,15 +40,68 @@
                 </div>
             </div>
             <div class="content-body">
+
+                @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <div class="alert-body">
+                                            {{$error}}
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                @endforeach
+            @endif
+
+
                 <!-- Ajax Sourced Server-side -->
                 <section id="ajax-datatable">
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
-                                <div class="card-header border-bottom">
-                                    <h4 class="card-title">List</h4>
-                                    <a href="{{route('products.create')}}" class=" btn btn-primary btn-gradient round  ">Add Product</a>
-                                </div>
+                                {{-- <div class="card-header border-bottom"> --}}
+                                    <div class="row border-bottom" style="padding-top: 6px">
+                                        <div class="col-md-9">
+                                            <h4 class="card-title">List</h4>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <a href="#" class="btn btn-success btn-gradient " data-bs-toggle="modal" data-bs-target="#import-subscriber">Import</a>
+                                            <!-- Modal -->
+                                            <div class="modal fade modal-success text-start" id="import-subscriber" tabindex="-1" aria-labelledby="myModalLabel120" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="myModalLabel120">Import Products</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form action="{{route('products.import')}}" method="POST" enctype="multipart/form-data" >
+                                                                    @csrf
+                                                                <div class="mb-1">
+                                                                    <label for="">Choose File</label>
+                                                                    <input type="file" class="form-control" name="csv_file" required >
+                                                                </div>
+                                                            </div>
+
+
+                                                                <div class="modal-footer">
+                                                                    <button type="submit" class="btn btn-success" >Import</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a href="{{route('products.create')}}" class=" btn btn-primary btn-gradient round  ">Add Product</a>
+                                        </div>
+                                    </div>
+                                    
+
+                                    
+
+                                    
+                                {{-- </div> --}}
                                 <div class="card-datatable">
                                     <table class="datatables-ajax table table-responsive datatable_data">
 

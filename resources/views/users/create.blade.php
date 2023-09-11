@@ -117,14 +117,14 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-1">
                                                     <label class="form-label" for="first-name-column">Password<span class="error">*</span></label>
-                                                    <input type="text" id="first-name-column" name="password" class="form-control" placeholder="Password" oninput=""  value="" />
+                                                    <input type="password" id="first-name-column" name="password" class="form-control" placeholder="Password" oninput=""  value="" />
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-1">
                                                     <label class="form-label" for="first-name-column">Confirm Password<span class="error">*</span></label>
-                                                    <input type="text" id="first-name-column" name="confirm_password" class="form-control" placeholder="Confirm Password" oninput=""  value="" />
+                                                    <input type="password" id="first-name-column" name="confirm_password" class="form-control" placeholder="Confirm Password" oninput=""  value="" />
                                                 </div>
                                             </div>
 
@@ -134,13 +134,12 @@
                                                     <textarea name="address" id="" cols="4" rows="4" class="form-control" placeholder="Current Address">{{ old('address') }}</textarea>
                                                 </div>
                                             </div>
-
-                                            
                                             
                                             <div class="col-12">
                                                 <button type="submit" class="btn btn-primary me-1">Submit</button>
                                                 <button type="reset" class="btn btn-outline-secondary">Reset</button>
                                             </div>
+
                                         </div>
                                     </form>
                                 </div>

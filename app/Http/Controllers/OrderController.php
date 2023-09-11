@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CreateOrderMail;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\OrderStatus;
@@ -11,6 +12,7 @@ use App\Models\Product;
 use App\Models\User;
 use Dotenv\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator as FacadesValidator;
 
 class OrderController extends Controller
@@ -152,6 +154,24 @@ class OrderController extends Controller
         $order = Order::where('id',$request->order_id)->update(['invoice' => $imageName]);
         return redirect()->back()->with('success','Invoice update Successfully');
 
+    }
+
+    public function orderHistory($order_id){
+        $order = Order::where('order_id',$order_id)->first();
+        $order_item = OrderItem::where('order_id',$order->id)->get()->map(function($items){
+            $items->product_name = isset(Product::find($items->product_id)->name) ? Product::find($items->product_id)->name :'';
+            return $items;
+        });
+        $user = User::find($order->user_id);
+        $testMailData = [
+            'user' => $user,
+            'order_item' => $order_item,
+            'order' => $order
+        ];
+        // $email = new CreateOrderMail($testMailData);
+        // Mail::to('jangidkapilyashu@gmail.com')->send($email);
+
+        return view('orders.order-history',compact('order','order_item','user'));
     }
 
 }

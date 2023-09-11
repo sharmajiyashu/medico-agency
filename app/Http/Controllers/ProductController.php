@@ -105,4 +105,49 @@ class ProductController extends Controller
             return json_encode(['1' ,'Status Active Successfully']);
         }
     }
+
+    public function import(Request $request){
+        
+        $validated = $request->validate([
+            'csv_file' => 'required',
+        ]);
+        if ($request->hasFile('csv_file')) {
+            $file = $request->file('csv_file');
+            $filename = 'subscriptions'.time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads'), $filename);
+
+            $total = $this->insertData($filename);
+
+            return redirect()->back()->with('success',$total.' product import SuccessFully');
+        }
+
+        return redirect()->back()->with('error',' Subscriber Import Failour');
+
+    }
+
+    private function insertData($filename)
+    {
+        $file = public_path('uploads/' . $filename);
+        $csvData = array_map('str_getcsv', file($file));
+        $csvHeader = $csvData[0]; // Assuming the first row contains header names
+
+        $total_subscriber_insert = 0;
+
+        foreach ($csvData as $key => $row) {
+            if ($key === 0) continue; // Skip the header row
+            $length = count($row);
+            
+            if($length == 1){
+                echo $row[0];
+                $check = Product::where('name',$row[0])->count();
+                if($check < 1){
+                    Product::create(['name' => $row[0]]);
+                    $total_subscriber_insert ++;
+                }
+            }
+
+
+        }
+        return $total_subscriber_insert;
+    }
 }

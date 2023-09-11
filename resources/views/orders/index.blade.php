@@ -64,7 +64,7 @@
                                                 <th>PAyment Mode</th>
                                                 <th>City</th>
                                                 <th>Items count</th>
-                                                <th>Created Date</th>
+                                                {{-- <th>Created Date</th> --}}
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -81,7 +81,7 @@
                                                 <td>{{ $val->payment_mode }}</td>
                                                 <td>{{ $val->city }}</td>
                                                 <td>{{ $val->items }}</td>
-                                                <td>{{ date('d-M-y H:i:s',strtotime($val->created_at)) }}</td>
+                                                {{-- <td>{{ date('d-M-y H:i:s',strtotime($val->created_at)) }}</td> --}}
                                                 <td>
                                                     <a href="#" class="text-danger" data-bs-toggle="modal" data-bs-target="#danger_ke{{ $val->id }}"><button class="btn btn-danger">Delete</button></a>
 

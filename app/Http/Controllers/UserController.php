@@ -7,6 +7,7 @@ use App\Models\User;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
 
 class UserController extends Controller
 {
@@ -17,7 +18,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::role(User::$role_user)->orderBy('id','desc')->get();
+        $users = User::role(User::$role_user)->orderBy('id','desc')->get()->map(function($user){
+            $user->gen_id = $encript_data = Crypt::encryptString($user->id);
+            return $user;
+        });
         return view('users.index',compact('users'));
     }
 
@@ -71,7 +75,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        
+        return view('users.edit',compact('user'));
     }
 
     /**
@@ -83,7 +88,17 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        
+        $email_count = user::where('email',$request->email)->whereNot('id',$user->id)->count();
+        if($email_count > 0){
+            return redirect()->back()->with('error','Email is already has been taken');
+        }
+        $mobile_count = user::where('mobile',$request->mobile)->whereNot('id',$user->id)->count();
+        if($mobile_count > 0){
+            return redirect()->back()->with('error','Mobile is already has been taken');
+        }
+        $user->update($request->all());
+        return redirect()->route('users.index')->with('success','User update sucessfully');
     }
 
     /**

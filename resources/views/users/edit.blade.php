@@ -5,6 +5,15 @@
 
 @section('content')
 
+<style>
+    .error{
+        color:red;
+    }
+    /* input {
+        text-transform: uppercase;
+    } */
+</style>
+
  <!-- BEGIN: Content-->
  <div class="app-content content ">
         <div class="content-overlay"></div>
@@ -14,14 +23,14 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-start mb-0">Payment Status</h2>
+                            <h2 class="content-header-title float-start mb-0">Customer</h2>
                             <div class="breadcrumb-wrapper">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="{{ url('/')}}">Home</a>
+                                    <li class="breadcrumb-item"><a href="{{ url('admin')}}">Home</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="{{ route('products.index') }}">Payment-status </a>
+                                    <li class="breadcrumb-item"><a href="{{ route('users.index') }}">Customers</a>
                                     </li>
-                                    <li class="breadcrumb-item active">Edit
+                                    <li class="breadcrumb-item active">Add
                                     </li>
                                 </ol>
                             </div>
@@ -48,35 +57,86 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Edit</h4>
+                                    {{-- <h4 class="card-title">Create</h4> --}}
                                 </div>
                                 <div class="card-body">
-                                    
-
-                                    <form class="form" action="{{ route('products.update',$product->id) }}" method="POST" enctype="multipart/form-data">
+                                    <form class="form" action="{{ route('users.update',$user->id) }}" method="POST" enctype="multipart/form-data">
                                         {{ csrf_field() }}
                                         @method('PATCH')
                                     
                                         <div class="row">
-                                            <div class="col-md-8 col-12">
+
+                                            <div class="col-md-3 col-12">
                                                 <div class="mb-1">
-                                                    <label class="form-label" for="first-name-column">Name <span class="error">*</span></label>
-                                                    <input type="text" id="first-name-column" name="name" class="form-control" placeholder="Name" oninput=""  value="{{ $product->name }}" />
+                                                    <label class="form-label" for="first-name-column">First Name <span class="error">*</span></label>
+                                                    <input type="text" id="first-name-column" name="first_name" class="form-control" placeholder="First Name" oninput=""  value="{{ $user->first_name }}" />
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-1 col-12">
+                                            <div class="col-md-3 col-12">
                                                 <div class="mb-1">
-                                                    <label class="form-label" for="first-name-column">Status <span class="error">*</span></label>
-                                                    <div class="form-check form-check-primary form-switch">
-                                                        <input class="form-check-input checked_chackbox" id="systemNotification" type="checkbox" name="status"  value="1"  
-                                                            @if ($product->status == 1)
-                                                                @checked(true)
-                                                            @endif
-                                                        >
-                                                    </div>
+                                                    <label class="form-label" for="first-name-column">Last Name <span class="error">*</span></label>
+                                                    <input type="text" id="first-name-column" name="last_name" class="form-control" placeholder="Last Name" oninput=""  value="{{ $user->last_name }}" />
                                                 </div>
                                             </div>
+
+                                            <div class="col-md-6 col-12">
+                                                <div class="mb-1">
+                                                    <label class="form-label" for="first-name-column">Upload Profile<span class="error">*</span></label>
+                                                    <input type="file" id="first-name-column" name="image" class="form-control" oninput=""  value="{{ old('image') }}" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-12">
+                                                <div class="mb-1">
+                                                    <label class="form-label" for="first-name-column">Mobile <span class="error">*</span></label>
+                                                    <input type="number" id="first-name-column" name="mobile" class="form-control" placeholder="Mobile" oninput=""  value="{{ $user->mobile }}" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-12">
+                                                <div class="mb-1">
+                                                    <label class="form-label" for="first-name-column">Email<span class="error">*</span></label>
+                                                    <input type="email" id="first-name-column" name="email" class="form-control" placeholder="Email" oninput=""  value="{{ $user->email }}" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-12">
+                                                <div class="mb-1">
+                                                    <label class="form-label" for="first-name-column">Business Name <span class="error">*</span></label>
+                                                    <input type="text" id="first-name-column" name="business_name" class="form-control" placeholder="Business Name" oninput=""  value="{{ $user->business_name }}" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-12">
+                                                <div class="mb-1">
+                                                    <label class="form-label" for="first-name-column">City <span class="error">*</span></label>
+                                                    <input type="text" id="first-name-column" name="city" class="form-control" placeholder="City" oninput=""  value="{{ $user->city }}" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-12">
+                                                <div class="mb-1">
+                                                    <label class="form-label" for="first-name-column">Dl Number <span class="error">*</span></label>
+                                                    <input type="text" id="first-name-column" name="dl" class="form-control" placeholder="DL Number" oninput=""  value="{{ $user->dl }}" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-12">
+                                                <div class="mb-1">
+                                                    <label class="form-label" for="first-name-column">GST Number <span class="error">*</span></label>
+                                                    <input type="text" id="first-name-column" name="gst" class="form-control" placeholder="GST Number" oninput=""  value="{{ $user->gst }}" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12 col-12">
+                                                <div class="mb-1">
+                                                    <label class="form-label" for="first-name-column">Address <span class="error">*</span></label>
+                                                    <textarea name="address" id="" cols="4" rows="4" class="form-control" placeholder="Current Address">{{ $user->address }}</textarea>
+                                                </div>
+                                            </div>
+
+                                            
                                             
                                             <div class="col-12">
                                                 <button type="submit" class="btn btn-primary me-1">Submit</button>

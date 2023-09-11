@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\GetOrderDetailRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Http\Requests\userLoginRequest;
+use App\Mail\CreateOrderMail;
+use App\Mail\ResetPassMale;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\OrderStatus;
@@ -17,6 +19,8 @@ use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\ApiResponse;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Crypt;
 
 class UserController extends Controller
 {
@@ -54,6 +58,8 @@ class UserController extends Controller
             'order_status' => isset(OrderStatus::where('is_default','1')->first()->id) ? OrderStatus::where('is_default','1')->first()->id :'',
             'address' => $request->user()->address,
         ];
+
+        // print_r($order_data);die;
         $order = Order::create($order_data);
         $order->payment_status = isset(PaymentStatus::find($order->payment_status)->name) ? PaymentStatus::find($order->payment_status)->name :'';
         $order->payment_mode = isset(PaymentMode::find($order->payment_mode)->name) ? PaymentMode::find($order->payment_mode)->name :'';
@@ -73,7 +79,7 @@ class UserController extends Controller
                 $remark = $val['remark'];
             }
         }
-        $order->update(['remark' => $remark]);
+        Order::where('id',$order->id)->update(['remark' => $remark]);
         if(!empty($order->invoice)){
             $order->invoice = asset('public/invoice/'.$order->invoice);
         }
@@ -81,6 +87,15 @@ class UserController extends Controller
             $items->product_name = isset(Product::find($items->product_id)->name) ? Product::find($items->product_id)->name :'';
             return $items;
         });
+        $user = User::find($order->user_id);
+        $testMailData = [
+            'user' => $user,
+            'order_item' => $items,
+            'order' => $order
+        ];
+        $email = new CreateOrderMail($testMailData);
+        Mail::to('jangidkapilyashu@gmail.com')->send($email);
+        Mail::to($user->email)->send($email);
         return $this->sendSuccess('Order create successfully',['order_detail' => $order ,'order_items' => $items]);
     }
 
@@ -162,6 +177,19 @@ class UserController extends Controller
         }else{
             return $this->sendFailed('Image is invalid',);
         }
+    }
+
+    public function resetPassword(){
+        $user_id = Auth::user()->id;
+        $encript_data = Crypt::encryptString(Auth::user()->id);
+        $link = route('reset_password',$encript_data);
+        $testMailData = [
+            'link' => $link
+        ];
+        $email = new ResetPassMale($testMailData);
+        Mail::to('jangidkapilyashu@gmail.com')->send($email);  
+        Mail::to(Auth::user()->email)->send($email);  
+        return $this->sendSuccess('Mail send successfully');
     }
 
 }

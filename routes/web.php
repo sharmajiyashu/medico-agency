@@ -48,6 +48,7 @@ Route::resource('products', ProductController::class);
 Route::resource('orders', OrderController::class);
 Route::resource('users', UserController::class);
 Route::post('products.change_status',[ProductController::class,'changeStatus'])->name('products.change_status');
+Route::post('products.import',[ProductController::class,'import'])->name('products.import');
 Route::post('users.change_status',[UserController::class,'changeStatus'])->name('users.change_status');
 Route::get('change_payment_status/{order_id}/{id}',[OrderController::class,'change_payment_status'])->name('change_payment_status');
 Route::get('change_payment_mode/{order_id}/{id}',[OrderController::class,'change_payment_mode'])->name('change_payment_mode');
@@ -58,3 +59,7 @@ Route::post('update_order_invoice',[OrderController::class,'updateInvoice'])->na
 
 Route::get('login',[LoginController::class,'index'])->name('login');
 Route::post('check_login',[LoginController::class,'check_login'])->name('check_login');
+Route::get('order-history/{order_id}',[OrderController::class,'orderHistory'])->name('order_history');
+Route::get('reset-password/{id}',[LoginController::class,'resetPassword'])->name('reset_password');
+Route::post('change_password',[LoginController::class,'change_password'])->name('change_password');
+
