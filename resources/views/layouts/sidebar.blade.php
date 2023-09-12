@@ -34,7 +34,15 @@
             @php
                 $product_count = DB::table('products')->whereNull('deleted_at')->count();
                 $user_count = DB::table('users')->where('role','2')->whereNull('deleted_at')->count();
-                $orders_count = DB::table('orders')->whereNull('deleted_at')->count();
+                $orders = DB::table('orders')->whereNull('deleted_at')->get();
+                $orders_count = 0;
+                foreach ($orders as $key => $value) {
+                    $check_user = Db::table('users')->whereNull('deleted_at')->where('id',$value->user_id)->first();
+                    if($check_user){
+                        $orders_count ++;
+                    }
+                }
+
             @endphp
             <li class=" nav-item {{ Request::routeIs('products.index', 'products.edit','products.create') ? 'active' : '' }}"><a class="d-flex align-items-center" href="{{ route('products.index') }}"><i data-feather="box"></i><span class="menu-title text-truncate" >Products</span><span class="badge badge-light-white rounded-pill ms-auto me-1">{{ $product_count }}</span></a>
                 

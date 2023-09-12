@@ -43,6 +43,8 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
+        $emailParts = explode('@', $request->email);
+        $username = $emailParts[0];
         $data  = $request->validated();
         if($request->hasFile('image')) {
             $image_name = time().rand(1,100).'-'.$request->image->getClientOriginalName();
@@ -50,6 +52,7 @@ class UserController extends Controller
             $request->image->move(public_path('images/users'), $image_name);
             $data['image'] = $image_name;
         }
+        $data['user_name'] = $username;
         $data['role'] = 2;
         $data['password'] = Hash::make($request->password);
         User::create($data);

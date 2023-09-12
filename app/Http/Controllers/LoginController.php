@@ -58,28 +58,37 @@ class LoginController extends Controller
         $users = User::role(User::$role_user)->count();
         $orders = Order::count();
         $orders_item = Order::latest()->limit(10)->get()->map(function($order){
-            $order->name = User::find($order->user_id)->first_name.''.User::find($order->user_id)->last_name;
-            $order->mobile = User::find($order->user_id)->mobile;
-            $order->city = User::find($order->user_id)->city;
-            $order->email = User::find($order->user_id)->email;
-            $order->payment_status = isset(PaymentStatus::find($order->payment_status)->name) ? PaymentStatus::find($order->payment_status)->name :'';
-            $order->payment_mode = isset(PaymentMode::find($order->payment_mode)->name) ? PaymentMode::find($order->payment_mode)->name :'';
-            $order->order_status = isset(OrderStatus::find($order->order_status)->name) ? OrderStatus::find($order->order_status)->name :'';
-            $order->items = OrderItem::where('order_id',$order->id)->count();
-            return $order;
-        });;
+            $check_user = User::find($order->user_id);
+            if($check_user){
+                $order->name = User::find($order->user_id)->first_name.''.User::find($order->user_id)->last_name;
+                $order->mobile = isset(User::find($order->user_id)->mobile) ? User::find($order->user_id)->mobile :'';
+                $order->city = User::find($order->user_id)->city;
+                $order->email = User::find($order->user_id)->email;
+                $order->payment_status = isset(PaymentStatus::find($order->payment_status)->name) ? PaymentStatus::find($order->payment_status)->name :'';
+                $order->payment_mode = isset(PaymentMode::find($order->payment_mode)->name) ? PaymentMode::find($order->payment_mode)->name :'';
+                $order->order_status = isset(OrderStatus::find($order->order_status)->name) ? OrderStatus::find($order->order_status)->name :'';
+                $order->items = OrderItem::where('order_id',$order->id)->count();
+                return $order;
+            }
+            
+        })->filter();
+        
+        
         $currentDate = Carbon::now()->toDateString();
         $orders_today = Order::whereDate('created_at', $currentDate)->latest()->limit(10)->get()->map(function($order){
-            $order->name = User::find($order->user_id)->first_name.''.User::find($order->user_id)->last_name;
-            $order->mobile = User::find($order->user_id)->mobile;
-            $order->city = User::find($order->user_id)->city;
-            $order->email = User::find($order->user_id)->email;
-            $order->payment_status = isset(PaymentStatus::find($order->payment_status)->name) ? PaymentStatus::find($order->payment_status)->name :'';
-            $order->payment_mode = isset(PaymentMode::find($order->payment_mode)->name) ? PaymentMode::find($order->payment_mode)->name :'';
-            $order->order_status = isset(OrderStatus::find($order->order_status)->name) ? OrderStatus::find($order->order_status)->name :'';
-            $order->items = OrderItem::where('order_id',$order->id)->count();
-            return $order;
-        });;
+            $check_user = User::find($order->user_id);
+            if($check_user){
+                $order->name = User::find($order->user_id)->first_name.''.User::find($order->user_id)->last_name;
+                $order->mobile = isset(User::find($order->user_id)->mobile) ? User::find($order->user_id)->mobile :'';
+                $order->city = User::find($order->user_id)->city;
+                $order->email = User::find($order->user_id)->email;
+                $order->payment_status = isset(PaymentStatus::find($order->payment_status)->name) ? PaymentStatus::find($order->payment_status)->name :'';
+                $order->payment_mode = isset(PaymentMode::find($order->payment_mode)->name) ? PaymentMode::find($order->payment_mode)->name :'';
+                $order->order_status = isset(OrderStatus::find($order->order_status)->name) ? OrderStatus::find($order->order_status)->name :'';
+                $order->items = OrderItem::where('order_id',$order->id)->count();
+                return $order;
+            }
+        })->filter();
         return view('dashboard',compact('products','orders','users','orders_item','orders_today'));
     }
 

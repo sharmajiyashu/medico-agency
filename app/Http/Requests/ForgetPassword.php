@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 
-class GetOrderDetailRequest extends FormRequest
+class ForgetPassword extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,7 @@ class GetOrderDetailRequest extends FormRequest
     public function rules()
     {
         return [
-            'order_id' => 'required|exists:orders,id'
+            'user_name' => 'required|exists:users,user_name'
         ];
     }
 

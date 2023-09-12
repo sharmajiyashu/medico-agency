@@ -74,14 +74,14 @@
 
                                             <div class="col-md-3 col-12">
                                                 <div class="mb-1">
-                                                    <label class="form-label" for="first-name-column">Last Name <span class="error">*</span></label>
+                                                    <label class="form-label" for="first-name-column">Last Name <span class="error"></span></label>
                                                     <input type="text" id="first-name-column" name="last_name" class="form-control" placeholder="Last Name" oninput=""  value="{{ old('last_name') }}" />
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-1">
-                                                    <label class="form-label" for="first-name-column">Upload Profile<span class="error">*</span></label>
+                                                    <label class="form-label" for="first-name-column">Upload Profile<span class="error"></span></label>
                                                     <input type="file" id="first-name-column" name="image" class="form-control" oninput=""  value="{{ old('image') }}" />
                                                 </div>
                                             </div>
@@ -102,15 +102,29 @@
 
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-1">
-                                                    <label class="form-label" for="first-name-column">Business Name <span class="error">*</span></label>
+                                                    <label class="form-label" for="first-name-column">Business Name <span class="error"></span></label>
                                                     <input type="text" id="first-name-column" name="business_name" class="form-control" placeholder="Business Name" oninput=""  value="{{ old('business_name') }}" />
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-1">
-                                                    <label class="form-label" for="first-name-column">City <span class="error">*</span></label>
+                                                    <label class="form-label" for="first-name-column">City <span class="error"></span></label>
                                                     <input type="text" id="first-name-column" name="city" class="form-control" placeholder="City" oninput=""  value="{{ old('city') }}" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-12">
+                                                <div class="mb-1">
+                                                    <label class="form-label" for="first-name-column">Dl Number <span class="error"></span></label>
+                                                    <input type="text" id="first-name-column" name="dl" class="form-control" placeholder="DL Number" oninput=""  value="{{ old('dl') }}" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-12">
+                                                <div class="mb-1">
+                                                    <label class="form-label" for="first-name-column">GST Number <span class="error"></span></label>
+                                                    <input type="text" id="first-name-column" name="gst" class="form-control" placeholder="GST Number" oninput=""  value="{{ old('gst') }}" />
                                                 </div>
                                             </div>
 

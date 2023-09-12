@@ -75,14 +75,14 @@
 
                                             <div class="col-md-3 col-12">
                                                 <div class="mb-1">
-                                                    <label class="form-label" for="first-name-column">Last Name <span class="error">*</span></label>
+                                                    <label class="form-label" for="first-name-column">Last Name <span class="error"></span></label>
                                                     <input type="text" id="first-name-column" name="last_name" class="form-control" placeholder="Last Name" oninput=""  value="{{ $user->last_name }}" />
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-1">
-                                                    <label class="form-label" for="first-name-column">Upload Profile<span class="error">*</span></label>
+                                                    <label class="form-label" for="first-name-column">Upload Profile<span class="error"></span></label>
                                                     <input type="file" id="first-name-column" name="image" class="form-control" oninput=""  value="{{ old('image') }}" />
                                                 </div>
                                             </div>
@@ -103,35 +103,35 @@
 
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-1">
-                                                    <label class="form-label" for="first-name-column">Business Name <span class="error">*</span></label>
+                                                    <label class="form-label" for="first-name-column">Business Name <span class="error"></span></label>
                                                     <input type="text" id="first-name-column" name="business_name" class="form-control" placeholder="Business Name" oninput=""  value="{{ $user->business_name }}" />
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-1">
-                                                    <label class="form-label" for="first-name-column">City <span class="error">*</span></label>
+                                                    <label class="form-label" for="first-name-column">City <span class="error"></span></label>
                                                     <input type="text" id="first-name-column" name="city" class="form-control" placeholder="City" oninput=""  value="{{ $user->city }}" />
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-1">
-                                                    <label class="form-label" for="first-name-column">Dl Number <span class="error">*</span></label>
+                                                    <label class="form-label" for="first-name-column">Dl Number <span class="error"></span></label>
                                                     <input type="text" id="first-name-column" name="dl" class="form-control" placeholder="DL Number" oninput=""  value="{{ $user->dl }}" />
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-1">
-                                                    <label class="form-label" for="first-name-column">GST Number <span class="error">*</span></label>
+                                                    <label class="form-label" for="first-name-column">GST Number <span class="error"></span></label>
                                                     <input type="text" id="first-name-column" name="gst" class="form-control" placeholder="GST Number" oninput=""  value="{{ $user->gst }}" />
                                                 </div>
                                             </div>
 
                                             <div class="col-md-12 col-12">
                                                 <div class="mb-1">
-                                                    <label class="form-label" for="first-name-column">Address <span class="error">*</span></label>
+                                                    <label class="form-label" for="first-name-column">Address <span class="error"></span></label>
                                                     <textarea name="address" id="" cols="4" rows="4" class="form-control" placeholder="Current Address">{{ $user->address }}</textarea>
                                                 </div>
                                             </div>

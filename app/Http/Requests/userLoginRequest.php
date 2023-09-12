@@ -28,7 +28,7 @@ class userLoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|exists:users,email',
+            'user_name' => 'required|exists:users,user_name',
             'password' => 'required'
         ];
     }
@@ -38,7 +38,7 @@ class userLoginRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'ResponseCode' => 200,
             'Status'   => false,
-            'Message'   => 'Validation errors',
+            'Message'   => $validator->errors()->first(),
             'Data'      => $validator->errors()->first()
         ]));
 

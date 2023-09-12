@@ -33,8 +33,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('order_detail',[UserController::class,'orderDetail']);
     Route::post('update_profile',[UserController::class,'updateProfile']);
     Route::post('generate_summary',[UserController::class,'generateSummary']);
-    Route::get('reset_password',[UserController::class,'resetPassword']);
+    Route::post('repet_order',[UserController::class,'repetOrder']);
+    Route::get('recent_order_products',[UserController::class,'recent_order_products']);
+
 });
 
+Route::post('forget_password',[UserController::class,'resetPassword']);
 Route::post('login',[UserController::class,'login']);
 

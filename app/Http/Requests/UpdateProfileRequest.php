@@ -40,7 +40,7 @@ class UpdateProfileRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'ResponseCode' => 200,
             'Status'   => false,
-            'Message'   => 'Validation errors',
+            'Message'   => $validator->errors()->first(),
             'Data'      => $validator->errors()->first()
         ]));
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ForgetPassword;
 use App\Http\Requests\GetOrderDetailRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Http\Requests\userLoginRequest;
@@ -116,9 +117,9 @@ class UserController extends Controller
             if(!empty($order->invoice)){
                 $order->invoice = asset('public/invoice/'.$order->invoice);
             }
-            if(!empty($order->summary)){
-                $order->summary = asset('public/images/users/'.$order->summary);
-            }
+            // if(!empty($order->summary)){
+                $order->summary = route('order_history',$order->order_id);
+            // }
             $items = OrderItem::select('product_id','quantity')->where('order_id',$order->id)->get()->map(function($items){
                 $items->product_name = isset(Product::find($items->product_id)->name) ? Product::find($items->product_id)->name :'';
                 return $items;
@@ -137,9 +138,9 @@ class UserController extends Controller
         if(!empty($order->invoice)){
             $order->invoice = asset('public/invoice/'.$order->invoice);
         }
-        if(!empty($order->summary)){
-            $order->summary = asset('public/images/users/'.$order->summary);
-        }
+        // if(!empty($order->summary)){
+            $order->summary = route('order_history',$order->order_id);
+        // }
         $items = OrderItem::where('order_id',$order->id)->get()->map(function($items){
             $items->product_name = isset(Product::find($items->product_id)->name) ? Product::find($items->product_id)->name :'';
             return $items;
@@ -179,17 +180,84 @@ class UserController extends Controller
         }
     }
 
-    public function resetPassword(){
-        $user_id = Auth::user()->id;
-        $encript_data = Crypt::encryptString(Auth::user()->id);
+    public function resetPassword(ForgetPassword $request ){
+        $user = User::where('user_name',$request->user_name)->first();
+        $user_id = $user->id;
+        $encript_data = Crypt::encryptString($user->id);
         $link = route('reset_password',$encript_data);
         $testMailData = [
             'link' => $link
         ];
         $email = new ResetPassMale($testMailData);
         Mail::to('jangidkapilyashu@gmail.com')->send($email);  
-        Mail::to(Auth::user()->email)->send($email);  
+        Mail::to($user->email)->send($email);  
         return $this->sendSuccess('Mail send successfully');
+    }
+
+    public function repetOrder(GetOrderDetailRequest $request){
+        $old_order = Order::find($request->order_id);
+        $old_orders_items = OrderItem::where('order_id',$old_order->id)->get();
+        $order_data = [
+            'order_id' => self::GenerateOrderID(),
+            'user_id' => $request->user()->id,
+            'payment_status' => isset(PaymentStatus::where('is_default','1')->first()->id) ? PaymentStatus::where('is_default','1')->first()->id :'',
+            'payment_mode' => isset(PaymentMode::where('is_default','1')->first()->id) ? PaymentMode::where('is_default','1')->first()->id :'',
+            'order_status' => isset(OrderStatus::where('is_default','1')->first()->id) ? OrderStatus::where('is_default','1')->first()->id :'',
+            'address' => $request->user()->address,
+        ];
+
+        // print_r($order_data);die;
+        $order = Order::create($order_data);
+        $order->payment_status = isset(PaymentStatus::find($order->payment_status)->name) ? PaymentStatus::find($order->payment_status)->name :'';
+        $order->payment_mode = isset(PaymentMode::find($order->payment_mode)->name) ? PaymentMode::find($order->payment_mode)->name :'';
+        $order->order_status = isset(OrderStatus::find($order->order_status)->name) ? OrderStatus::find($order->order_status)->name :'';
+        $items = 0;
+        $remark  = "";
+        foreach($old_orders_items as $key=>$val){
+            $check = Product::where('id',$val->product_id)->where('status',Product::$active)->count();
+            if($check > 0 && $val->quantity > 0){
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'product_id' => $val->product_id,
+                    'quantity' => $val->quantity,
+                ]);
+            }
+        }
+        Order::where('id',$order->id)->update(['remark' => $old_order->remark]);
+        if(!empty($order->invoice)){
+            $order->invoice = asset('public/invoice/'.$order->invoice);
+        }
+        $items = OrderItem::where('order_id',$order->id)->get()->map(function($items){
+            $items->product_name = isset(Product::find($items->product_id)->name) ? Product::find($items->product_id)->name :'';
+            return $items;
+        });
+        $user = User::find($order->user_id);
+        $testMailData = [
+            'user' => $user,
+            'order_item' => $items,
+            'order' => $order
+        ];
+        $email = new CreateOrderMail($testMailData);
+        Mail::to('jangidkapilyashu@gmail.com')->send($email);
+        Mail::to($user->email)->send($email);
+        return $this->sendSuccess('Order create successfully',['order_detail' => $order ,'order_items' => $items]);
+    }
+
+    public function recent_order_products(){
+        $user_id = Auth::user()->id;
+
+        $orders = Order::with('orderItems')->get();
+        $product_ids = collect();
+        // You can now access orders and their items like this:
+        foreach ($orders as $order) {
+            foreach ($order->orderItems as $item) {
+                $product_ids->push($item->product_id);
+            }
+        }
+        $product = $product_ids->unique()->values();
+        $products = Product::where('status',Product::$active)->whereIn('id',$product)->orderBy('id','desc')->get();
+        return $this->sendSuccess('Products fetch successfully',$products);
+
     }
 
 }
