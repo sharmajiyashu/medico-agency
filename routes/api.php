@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('products',[UserController::class,'products']);
     Route::post('create_order',[UserController::class,'createOrder']);
     Route::get('orders',[UserController::class,'orders']);
+    Route::get('on_going_orders',[UserController::class,'onGoingoOrders']);
     Route::post('order_detail',[UserController::class,'orderDetail']);
     Route::post('update_profile',[UserController::class,'updateProfile']);
     Route::post('generate_summary',[UserController::class,'generateSummary']);

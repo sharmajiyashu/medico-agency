@@ -109,6 +109,27 @@ class UserController extends Controller
         }
     }
 
+    public function onGoingoOrders(Request $request){
+        $orders = Order::where('user_id',$request->user()->id)->whereNot('order_status','7')->orderBy('id','desc')->get()->map(function($order){
+            $order->payment_status = isset(PaymentStatus::find($order->payment_status)->name) ? PaymentStatus::find($order->payment_status)->name :'';
+            $order->payment_mode = isset(PaymentMode::find($order->payment_mode)->name) ? PaymentMode::find($order->payment_mode)->name :'';
+            $order->order_status = isset(OrderStatus::find($order->order_status)->name) ? OrderStatus::find($order->order_status)->name :'';
+            if(!empty($order->invoice)){
+                $order->invoice = asset('public/invoice/'.$order->invoice);
+            }
+            // if(!empty($order->summary)){
+                $order->summary = route('order_history',$order->order_id);
+            // }
+            $items = OrderItem::select('product_id','quantity')->where('order_id',$order->id)->get()->map(function($items){
+                $items->product_name = isset(Product::find($items->product_id)->name) ? Product::find($items->product_id)->name :'';
+                return $items;
+            });
+            $order->items = $items;
+            return $order;
+        });
+        return $this->sendSuccess('Orders Fetch successfully',$orders);
+    }    
+
     public function orders(Request $request){
         $orders = Order::where('user_id',$request->user()->id)->orderBy('id','desc')->get()->map(function($order){
             $order->payment_status = isset(PaymentStatus::find($order->payment_status)->name) ? PaymentStatus::find($order->payment_status)->name :'';
@@ -147,6 +168,7 @@ class UserController extends Controller
         });
         return $this->sendSuccess('Order detail fetch successfully',['order_detail' => $order ,'order_items' => $items]);
     }
+    
 
     public function updateProfile(UpdateProfileRequest $request){
         $data  = $request->validated();
